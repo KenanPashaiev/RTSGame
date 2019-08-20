@@ -13,13 +13,15 @@ public class Map : MonoBehaviour
     public int MapSizeX;
     public int MapSizeY;
 
-    public float GameStepLength = 0.1f;
+    public float GameStepLength;
 
     public ClickableTile[,] tileMap;
 
     public GameObject tilePrefab;
     public GameObject playerBasePrefab;
     public GameObject aiBasePrefab;
+
+    public Camera Camera;
 
     public List<Base> BaseList;
     
@@ -50,7 +52,6 @@ public class Map : MonoBehaviour
 
     private void Start()
     {
-        GameStepLength = 0.1f;
         tileMap = new ClickableTile[MapSizeX, MapSizeY];
         BaseList = new List<Base>();
 
@@ -135,6 +136,8 @@ public class Map : MonoBehaviour
 
         player.Base.baseColor = Color.blue;
         player.Base.AddTile(randomTile);
+
+        Camera.main.transform.position = new Vector3(randomTile.positionX, randomTile.positionY, Camera.main.transform.position.z);
 
         SetNeigbours();
     }

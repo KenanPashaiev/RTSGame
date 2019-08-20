@@ -18,9 +18,17 @@ public class PlayerBase : MonoBehaviour
     public void Raid(int attackUnitsCount, int defenceUnitsCount, int speedUnitsCount, int raidedBaseIndex)
     {
         var raidedBase = map.BaseList[raidedBaseIndex];
+
+        var raidedBaseIsNull = raidedBase == null;
+        var baseIsRaided = raidedBase.isRaided == true;
+        if (raidedBaseIsNull && baseIsRaided)
+        {
+            return;
+        }
+
         Troop troop = Base.CreateTroop(attackUnitsCount, defenceUnitsCount, speedUnitsCount);
 
-        if (troop != null && raidedBase != null && raidedBase.isRaided == false)
+        if (troop != null)
         {
             raidedBase.isRaided = true;
             GameObject go = Instantiate(TroopPrefab, Base.TileList[0].transform);

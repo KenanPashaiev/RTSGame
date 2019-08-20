@@ -177,20 +177,33 @@ public class AIBase : MonoBehaviour
 
     private void Raid()
     {
-        if (Base.UnitsCount < 10)
+        var unitCountIsLow = Base.UnitsCount < 10;
+        if (unitCountIsLow)
+        {
             return;
+        }
 
         System.Random random = new System.Random();
         int raidedBaseIndex = random.Next(0, map.BaseList.Count);
 
         while (raidedBaseIndex == Base.baseIndex)
+        {
             raidedBaseIndex = random.Next(0, map.BaseList.Count);
+        }
 
         int attackUnitsCount = random.Next((int)Base.AttackUnitsCount / 2, Base.AttackUnitsCount);
         int defenceUnitsCount = random.Next((int)Base.DefenceUnitsCount / 2, Base.DefenceUnitsCount);
         int speedUnitsCount = random.Next((int)Base.SpeedUnitsCount / 2, Base.SpeedUnitsCount);
 
         var raidedBase = map.BaseList[raidedBaseIndex];
+
+        var raidedBaseIsNull = raidedBase == null;
+        var baseIsRaided = raidedBase.isRaided == true;
+        if (raidedBaseIsNull && baseIsRaided)
+        {
+            return;
+        }
+
         Troop troop = Base.CreateTroop(attackUnitsCount, defenceUnitsCount, speedUnitsCount);
 
         if (troop != null && raidedBase != null && map.BaseList[raidedBaseIndex].isRaided == false)
@@ -203,7 +216,6 @@ public class AIBase : MonoBehaviour
             Troop.Base = Base;
             Troop.raidedBaseIndex = raidedBaseIndex;
             Troop.troop = troop;
-            //Debug.Log("Raid; " + troop.UnitsCount.ToString());
             //Debug.Log("Raid; " + Base.CreditsCount.ToString() + ";" + Base.ProductsCount.ToString() + ";" + Base.ResidentsCount.ToString() + ";" + Base.UnitsCount.ToString());
         }
     }
