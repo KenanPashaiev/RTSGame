@@ -27,6 +27,7 @@ public class Map : MonoBehaviour
     
     public void FinishGame()
     {
+        SaveSystem.SaveRecord(PlayerName, BaseList.Count, time, "won");
         return;
     }
 
