@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Base\ActionRandomizer.cs" />
     <Compile Include="Assets\Base\AIBase.cs" />
+    <Compile Include="Assets\Base\AIType.cs" />
     <Compile Include="Assets\Base\Base.cs" />
     <Compile Include="Assets\Base\PlayerBase.cs" />
     <Compile Include="Assets\Camera\CameraController.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Generic Classes\Unit\SpeedUnit.cs" />
     <Compile Include="Assets\Generic Classes\Unit\Troop.cs" />
     <Compile Include="Assets\Generic Classes\Unit\Unit.cs" />
+    <Compile Include="Assets\Generic Classes\Unit\UnitType.cs" />
     <Compile Include="Assets\Interfaces\BarrackInterface\BarrackInterface.cs" />
     <Compile Include="Assets\Interfaces\BarrackInterface\UnitInterface.cs" />
     <Compile Include="Assets\Interfaces\ExpandInterface\ExpandInterface.cs" />
@@ -92,8 +94,10 @@
     <Compile Include="Assets\Map\Map.cs" />
     <Compile Include="Assets\Menu\MainMenu.cs" />
     <Compile Include="Assets\Menu\PlayMenu.cs" />
+    <Compile Include="Assets\Menu\Record.cs" />
     <Compile Include="Assets\Menu\RecordMenu.cs" />
     <Compile Include="Assets\Save\MatchData.cs" />
+    <Compile Include="Assets\Save\MatchResult.cs" />
     <Compile Include="Assets\Save\SaveSystem.cs" />
     <Compile Include="Assets\Tile\ClickableTile.cs" />
     <Compile Include="Assets\Troop\BattleResult.cs" />

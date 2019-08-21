@@ -52,7 +52,6 @@ namespace RTS
             }
         }
 
-
         public readonly static int UnitTrainingCreditsCost = 10;
         public readonly static int UnitTrainingProductsCost = 10;
         public readonly static int UnitTrainingResidentsCost = 1;
@@ -86,7 +85,7 @@ namespace RTS
             return canTrainUnit;
         }
 
-        public bool TrainUnit(int unitType)
+        public bool TrainUnit(UnitType unitType)
         {
             if (!CanTrainUnit())
             {
@@ -99,19 +98,19 @@ namespace RTS
 
             switch (unitType)
             {
-                case 0:
+                case UnitType.attackUnit:
                     {
                         var unit = new AttackUnit(this);
                         UnitList.Add(unit);
                         break;
                     }
-                case 1:
+                case UnitType.defenceUnit:
                     {
                         var unit = new DefenceUnit(this);
                         UnitList.Add(unit);
                         break;
                     }
-                case 2:
+                case UnitType.speedUnit:
                     {
                         var unit = new SpeedUnit(this);
                         UnitList.Add(unit);
@@ -122,12 +121,12 @@ namespace RTS
             return true;
         }
 
-        public Unit AqcuireUnit(int unitType)
+        public Unit AqcuireUnit(UnitType unitType)
         {
             Unit unit;
             switch (unitType)
             {
-                case 0:
+                case UnitType.attackUnit:
                     {
                         for(int i = 0; i < UnitList.Count; i++)
                         {
@@ -141,7 +140,7 @@ namespace RTS
                         }
                         return null;
                     }
-                case 1:
+                case UnitType.defenceUnit:
                     {
                         for (int i = 0; i < UnitList.Count; i++)
                         {
@@ -155,7 +154,7 @@ namespace RTS
                         }
                         return null;
                     }
-                case 2:
+                case UnitType.speedUnit:
                     {
                         for (int i = 0; i < UnitList.Count; i++)
                         {

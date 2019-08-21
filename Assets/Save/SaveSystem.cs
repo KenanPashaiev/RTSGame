@@ -6,14 +6,19 @@ using UnityEngine;
 
 public static class SaveSystem
 {
-    public static void SaveRecord(string playerName, int baseCount, float matchTime, string result)
+    public static void SaveRecord(string playerName, int baseCount, float matchTime, MatchResult result)
     {
+        var matchData = new MatchData(playerName, baseCount, matchTime, result);
+        var recordList = LoadRecords();
+
         var formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/save.sav";
         var fileStream = new FileStream(path, FileMode.OpenOrCreate);
 
-        var matchData = new MatchData(playerName, baseCount, matchTime, result);
-        var recordList = SaveSystem.LoadRecords();
+        if (recordList == null)
+        {
+            recordList = new List<MatchData>();
+        }
         recordList.Add(matchData);
 
         formatter.Serialize(fileStream, recordList);
@@ -23,20 +28,23 @@ public static class SaveSystem
     public static List<MatchData> LoadRecords()
     {
         string path = Application.persistentDataPath + "/save.sav";
-        if(File.Exists(path))
+
+        if (File.Exists(path))
         {
             var formatter = new BinaryFormatter();
             var fileStream = new FileStream(path, FileMode.Open);
 
+            if (fileStream.Length == 0)
+            {
+                fileStream.Close();
+                return null;
+            }
             var recordList = formatter.Deserialize(fileStream) as List<MatchData>;
             fileStream.Close();
 
             return recordList;
         }
-        else
-        {
-            Debug.LogError("Save file not found");
-            return null;
-        }
+
+        return null;
     }
 }

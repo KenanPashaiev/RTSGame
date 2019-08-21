@@ -66,8 +66,10 @@ public class PlayerBase : MonoBehaviour
             Base.TileList[i].RemoveBase();
         }
         map.BaseList[Base.baseIndex] = null;
+        playerInterface.gameObject.SetActive(false);
+        Destroy(playerInterface);
         Destroy(gameObject);
-        map.FinishGame();
+        map.FinishGame(MatchResult.defeat);
     }
 
     private void Start()

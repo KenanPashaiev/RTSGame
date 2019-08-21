@@ -43,7 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc0410642814c346826d6361bd06005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
+  MainMenuPrefab: {fileID: 6041603260473459522, guid: f9327d45693f3434dabbff1d7e2e4bed,
+    type: 3}
+  PlayerName: 
   MapSizeX: 15
   MapSizeY: 15
   GameStepLength: 4
@@ -53,3 +55,4 @@ MonoBehaviour:
     type: 3}
   aiBasePrefab: {fileID: 4532691523029717030, guid: 6fb974b11401df440a9e40fe6b0efb23,
     type: 3}
+  Camera: {fileID: 0}

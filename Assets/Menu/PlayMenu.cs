@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayMenu : MonoBehaviour
 {
+    public MainMenu MainMenuPrefab;
+    public PlayMenu PlayMenuPrefab;
+
     public GameObject MapPrefub;
 
     public InputField PlayerNameInputField;
@@ -70,7 +73,24 @@ public class PlayMenu : MonoBehaviour
         var playerName = PlayerNameInputField.text;
         map.PlayerName = playerName;
 
-        Destroy(gameObject); 
+        map.MainMenu = MainMenuPrefab;
+
+        PlayMenuPrefab.HideMenu();
+    }
+
+    public void OnEscapeButtonClick()
+    {
+        PlayMenuPrefab.HideMenu();
+        MainMenuPrefab.ShowMenu();
+    }
+
+    public void HideMenu()
+    {
         gameObject.SetActive(false);
+    }
+
+    public void ShowMenu()
+    {
+        gameObject.SetActive(true);
     }
 }

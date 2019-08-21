@@ -9,9 +9,9 @@ public class MatchData
     public string PlayerName;
     public int BaseCount;
     public float MatchTime;
-    public string Result;
+    public MatchResult Result;
 
-    public MatchData(string playerName, int baseCount, float matchTime, string result)
+    public MatchData(string playerName, int baseCount, float matchTime, MatchResult result)
     {
         PlayerName = playerName;
         BaseCount = baseCount;

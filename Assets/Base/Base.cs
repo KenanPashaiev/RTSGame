@@ -151,7 +151,7 @@ public class Base
 
     public bool SellProducts(int soldProductsCount) => _portal.SellProducts(soldProductsCount);
 
-    public bool TrainUnit(int unitType) => _barrack.TrainUnit(unitType);
+    public bool TrainUnit(UnitType unitType) => _barrack.TrainUnit(unitType);
 
     public bool CanTrainUnit() => _barrack.CanTrainUnit();
 
@@ -171,17 +171,17 @@ public class Base
 
         for (int i = 0; i < attackUnitsCount; i++)
         {
-            unitList.Add(_barrack.AqcuireUnit(0) as AttackUnit);
+            unitList.Add(_barrack.AqcuireUnit(UnitType.attackUnit));
         }
 
         for (int i = 0; i < defenceUnitsCount; i++)
         {
-            unitList.Add(_barrack.AqcuireUnit(1) as DefenceUnit);
+            unitList.Add(_barrack.AqcuireUnit(UnitType.defenceUnit));
         }
 
         for (int i = 0; i < speedUnitsCount; i++)
         {
-            unitList.Add(_barrack.AqcuireUnit(2) as SpeedUnit);
+            unitList.Add(_barrack.AqcuireUnit(UnitType.speedUnit));
         }
 
         Troop troop = new Troop(unitList);

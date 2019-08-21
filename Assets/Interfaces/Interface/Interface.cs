@@ -107,7 +107,7 @@ public class Interface : MonoBehaviour
 
     public void OnEscapeButtonClick()
     {
-        PlayerBase.map.FinishGame();
+        PlayerBase.map.FinishGame(MatchResult.leftMatch);
         Destroy(gameObject);
     }
 

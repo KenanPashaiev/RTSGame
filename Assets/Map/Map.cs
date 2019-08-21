@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
+    public MainMenu MainMenu;
+
     public float time { get; private set; }
 
     public string PlayerName;
@@ -17,6 +19,7 @@ public class Map : MonoBehaviour
 
     public ClickableTile[,] tileMap;
 
+
     public GameObject tilePrefab;
     public GameObject playerBasePrefab;
     public GameObject aiBasePrefab;
@@ -25,10 +28,39 @@ public class Map : MonoBehaviour
 
     public List<Base> BaseList;
     
-    public void FinishGame()
+    public void FinishGame(MatchResult matchResult)
     {
-        SaveSystem.SaveRecord(PlayerName, BaseList.Count, time, "won");
+        SaveSystem.SaveRecord(PlayerName, BaseList.Count - 1, time, matchResult);
+        DestroyAllBases();
+        DestroyAllTiles();
+        MainMenu.ShowMenu();
+        Destroy(gameObject);
         return;
+    }
+
+    public void DestroyAllBases()
+    {
+        for(int i = 0; i < BaseList.Count; i++)
+        {
+            if(BaseList[i] != null)
+            {
+                BaseList[i].DestroyBase();
+            }
+        }
+    }
+
+    public void DestroyAllTiles()
+    {
+        for (int i = 0; i < MapSizeX; i++)
+        {
+            for (int j = 0; j < MapSizeY; j++)
+            {
+                if(tileMap[i, j] != null)
+                {
+                    Destroy(tileMap[i, j].gameObject);
+                }
+            }
+        }
     }
 
     public List<ClickableTile> GetFreeNeighbourTiles(int baseIndex)
@@ -151,7 +183,8 @@ public class Map : MonoBehaviour
             AIBase aiBase = gameObj.GetComponent<AIBase>();
             BaseList.Add(aiBase.Base);
 
-            aiBase.AIType = UnityEngine.Random.Range(0, 2);
+
+            aiBase.AIType = GetRandomAIType();
             aiBase.GameStepLength = GameStepLength;
 
             aiBase.map = this;
@@ -164,6 +197,18 @@ public class Map : MonoBehaviour
 
             SetNeigbours();
         }
+    }
+
+    private AIType GetRandomAIType()
+    {
+        Array aiTypes = Enum.GetValues(typeof(AIType));
+        int aiTypesCount = aiTypes.Length;
+
+        System.Random random = new System.Random();
+        int randomAITypeIndex = random.Next(aiTypesCount);
+        AIType randomAIType = (AIType)aiTypes.GetValue(randomAITypeIndex);
+
+        return randomAIType;
     }
 
     private ClickableTile GetFreeTile()
