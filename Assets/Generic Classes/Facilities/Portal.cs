@@ -59,13 +59,11 @@ namespace RTS
             _base.AcquireProducts(LevelUpPrice);
             _base.AcquireCredits(LevelUpPrice);
             
-
             var productPurchaseSellDifference = ProductBuyPrice - ProductSalePrice;
             productPurchaseSellDifference *= 0.99f;
 
             ProductBuyPrice = 1 + productPurchaseSellDifference / 2;
             ProductSalePrice = 1 - productPurchaseSellDifference / 2;
-
             PortalProductGrowthBonus += 0.0025f;
 
             Level++;

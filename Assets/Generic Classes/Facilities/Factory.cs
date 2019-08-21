@@ -8,7 +8,6 @@ namespace RTS
 {
     public class Factory : Facility
     {
-
         public float ProductGrowth { get; private set; }
 
         public Factory(Base playerBase) : base (playerBase)
