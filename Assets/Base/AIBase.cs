@@ -6,7 +6,7 @@ using RTS;
 
 public class AIBase : MonoBehaviour
 {
-    public int AIType;
+    public AIType AIType;
     public float GameStepLength;
 
     public Map map;
@@ -37,29 +37,28 @@ public class AIBase : MonoBehaviour
 
     private void GameStep()
     {
-        //AIType = 0;
         Action agresiveMove = AgresiveMove;
         Action passiveMove = PassiveMove;
 
         ActionRandomizer actionRandomizer = new ActionRandomizer();
 
-        switch (AIType)//enum
+        switch (AIType)
         {
-            case 0://Agressor
+            case AIType.agressor:
                 {
                     actionRandomizer.Add(agresiveMove, 75);
                     actionRandomizer.Add(passiveMove, 25);
                     break;
                 }
 
-            case 1://Builder
+            case AIType.builder:
                 {
                     actionRandomizer.Add(agresiveMove, 25);
                     actionRandomizer.Add(passiveMove, 75);
                     break;
                 }
 
-            case 2://Merchant
+            case AIType.merchant:
                 {
                     actionRandomizer.Add(passiveMove, 100);
                     break;
@@ -115,7 +114,6 @@ public class AIBase : MonoBehaviour
             bool done = randomFacility.LevelUp();
             if(done)
             {
-                //Debug.Log("Level up; " + Base.CreditsCount.ToString() + ";" + Base.ProductsCount.ToString() + ";" + Base.ResidentsCount.ToString() + ";" + Base.UnitsCount.ToString());
                 return;
             }
             facilityList.Remove(randomFacility);
@@ -144,8 +142,6 @@ public class AIBase : MonoBehaviour
             }
             randomTrainedUnitCount--;
         }
-
-        //Debug.Log("Train; " + Base.CreditsCount.ToString() + ";" + Base.ProductsCount.ToString() + ";" + Base.ResidentsCount.ToString() + ";" + Base.UnitsCount.ToString());
     }
 
     private void ExchangeResources()
@@ -163,49 +159,65 @@ public class AIBase : MonoBehaviour
         {
             int boughtProductsCount = (int)(exchangeCount / Base.ProductBuyPrice);
             Base.BuyProducts(boughtProductsCount);
-            //Debug.Log("Exchange; " + Base.CreditsCount.ToString() + ";" + Base.ProductsCount.ToString() + ";" + Base.ResidentsCount.ToString() + ";" + Base.UnitsCount.ToString());
             return;
         }
         else if(productsCount > creditsCount)
         {
             int soldProductsCount = (int)exchangeCount;
             Base.SellProducts(soldProductsCount);
-            //Debug.Log("Exchange; " + Base.CreditsCount.ToString() + ";" + Base.ProductsCount.ToString() + ";" + Base.ResidentsCount.ToString() + ";" + Base.UnitsCount.ToString());
             return;
         }
     }
 
     private void Raid()
     {
-        if (Base.UnitsCount < 10)
+        var unitCountIsLow = Base.UnitsCount < 10;
+        if (unitCountIsLow)
+        {
             return;
+        }
 
         System.Random random = new System.Random();
-        int raidedBaseIndex = random.Next(0, map.BaseList.Count);
-
-        while (raidedBaseIndex == Base.baseIndex)
-            raidedBaseIndex = random.Next(0, map.BaseList.Count);
-
         int attackUnitsCount = random.Next((int)Base.AttackUnitsCount / 2, Base.AttackUnitsCount);
         int defenceUnitsCount = random.Next((int)Base.DefenceUnitsCount / 2, Base.DefenceUnitsCount);
         int speedUnitsCount = random.Next((int)Base.SpeedUnitsCount / 2, Base.SpeedUnitsCount);
 
-        var raidedBase = map.BaseList[raidedBaseIndex];
+        var raidedBase = GetRandomRaidBase();
+
+        var raidedBaseIsNull = raidedBase == null;
+        var baseIsRaided = raidedBase.isRaided == true;
+        if (raidedBaseIsNull && baseIsRaided)
+        {
+            return;
+        }
+
         Troop troop = Base.CreateTroop(attackUnitsCount, defenceUnitsCount, speedUnitsCount);
 
-        if (troop != null && raidedBase != null && map.BaseList[raidedBaseIndex].isRaided == false)
+        if (troop != null && raidedBase != null && raidedBase.isRaided == false)
         {
-            map.BaseList[raidedBaseIndex].isRaided = true;
+            raidedBase.isRaided = true;
             GameObject go = Instantiate(TroopPrefab, Base.TileList[0].transform);
             Troop = go.GetComponent<TroopController>();
             Troop.origin = Base.TileList[0];
             Troop.map = map;
             Troop.Base = Base;
-            Troop.raidedBaseIndex = raidedBaseIndex;
+            Troop.raidedBaseIndex = raidedBase.baseIndex;
             Troop.troop = troop;
-            //Debug.Log("Raid; " + troop.UnitsCount.ToString());
-            //Debug.Log("Raid; " + Base.CreditsCount.ToString() + ";" + Base.ProductsCount.ToString() + ";" + Base.ResidentsCount.ToString() + ";" + Base.UnitsCount.ToString());
         }
+    }
+
+    private Base GetRandomRaidBase()
+    {
+        System.Random random = new System.Random();
+        int raidedBaseIndex = random.Next(0, map.BaseList.Count);
+
+        while (raidedBaseIndex == Base.baseIndex)
+        {
+            raidedBaseIndex = random.Next(0, map.BaseList.Count);
+        }
+        var raidedBase = map.BaseList[raidedBaseIndex];
+
+        return raidedBase;
     }
 
     private void Expand()
@@ -218,7 +230,6 @@ public class AIBase : MonoBehaviour
         var randomTile = tileList[random.Next(0, tileList.Count)];
         if(Base.AddTile(randomTile))
         {
-            //Debug.Log("Expand; " + Base.CreditsCount.ToString() + ";" + Base.ProductsCount.ToString() + ";" + Base.ResidentsCount.ToString() + ";" + Base.UnitsCount.ToString());
             return;
         }
 

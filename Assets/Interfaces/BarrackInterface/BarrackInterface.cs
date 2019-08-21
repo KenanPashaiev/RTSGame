@@ -87,11 +87,11 @@ public class BarrackInterface : MonoBehaviour
                 var speedUnitsCount = SpeedUnitInterface.TrainedUnitsCount;
 
                 for (int i = 0; i < attackUnitsCount; i++)
-                    PlayerBase.TrainUnit(0);
+                    PlayerBase.TrainUnit(UnitType.attackUnit);
                 for (int i = 0; i < defenceUnitsCount; i++)
-                    PlayerBase.TrainUnit(1);
+                    PlayerBase.TrainUnit(UnitType.defenceUnit);
                 for (int i = 0; i < speedUnitsCount; i++)
-                    PlayerBase.TrainUnit(2);
+                    PlayerBase.TrainUnit(UnitType.speedUnit);
             }
         }
     }

@@ -8,7 +8,6 @@ public class LevelUpInterface : MonoBehaviour
 {
     public Interface Interface;
 
-
     public Base PlayerBase;
     public GameObject ContentBox;
     public FacilityBox FacilityBox;

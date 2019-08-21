@@ -50,7 +50,7 @@ public class Interface : MonoBehaviour
         ButtonManager.SetActive(!ButtonManager.activeSelf);
     }
 
-    public void OpenPortalInterface()
+    public void OnPortalButtonClick()
     {
         if (PortalInterfaceClone == null)
         {
@@ -61,7 +61,7 @@ public class Interface : MonoBehaviour
         }
     }
 
-    public void OpenBarrackInterface()
+    public void OnBarrackButtonClick()
     {
         if (BarrackInterfaceClone == null)
         {
@@ -72,7 +72,7 @@ public class Interface : MonoBehaviour
         }
     }
 
-    public void OpenLevelUpInterface()
+    public void OnLevelUpButtonClick()
     {
         if (LevelUpInterfaceClone == null)
         {
@@ -83,7 +83,7 @@ public class Interface : MonoBehaviour
         }
     }
 
-    public void OpenExpandInterface()
+    public void OnExpandButtonClick()
     {
         if (ExpandInterfaceClone == null)
         {
@@ -94,7 +94,7 @@ public class Interface : MonoBehaviour
         }
     }
 
-    public void OpenRaidInterface()
+    public void OnRaidButtonClick()
     {
         if (RaidInterfaceClone == null)
         {
@@ -103,6 +103,12 @@ public class Interface : MonoBehaviour
             RaidInterfaceClone.PlayerBase = PlayerBase.Base;
             ToggleButtonVisibility();
         }
+    }
+
+    public void OnEscapeButtonClick()
+    {
+        PlayerBase.map.FinishGame(MatchResult.leftMatch);
+        Destroy(gameObject);
     }
 
     private void Update()

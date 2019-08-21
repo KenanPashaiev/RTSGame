@@ -20,8 +20,6 @@ public class ActionRandomizer
     private List<WeightedAction> _probList;
     private int weight;
 
-    
-
     public ActionRandomizer()
     {
         _probList = new List<WeightedAction>();
@@ -36,13 +34,10 @@ public class ActionRandomizer
 
     public Action GetRandomAction()
     {
+        ReweightActions(_probList);
+
         System.Random random = new System.Random();
         int randomNumber = UnityEngine.Random.Range(0, 99);
-
-        for(int i = 0; i < _probList.Count; i++)
-        {
-            _probList[i].Probabilty /= weight / 100;
-        }
 
         int summ = 0;
         for(int i = 0; i < _probList.Count; i++)
@@ -56,5 +51,13 @@ public class ActionRandomizer
         }
 
         return null;
+    }
+
+    private void ReweightActions(List<WeightedAction> probList)
+    {
+        for (int i = 0; i < _probList.Count; i++)
+        {
+            probList[i].Probabilty /= weight / 100;
+        }
     }
 }

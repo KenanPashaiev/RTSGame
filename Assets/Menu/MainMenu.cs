@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject MainMenuPrefab;
-    public GameObject PlayMenuPrefab;
-    public GameObject RecordsMenuPrefab;
+    public MainMenu MainMenuPrefab;
+    public PlayMenu PlayMenuPrefab;
+    public RecordMenu RecordsMenuPrefab;
 
     public void OnPlayButtonClick()
     {
-        PlayMenuPrefab.SetActive(true);
-        MainMenuPrefab.SetActive(false);
+        PlayMenuPrefab.ShowMenu();
+        MainMenuPrefab.HideMenu();
     }
 
     public void OnRecordsButtonClick()
     {
-        RecordsMenuPrefab.SetActive(true);
-        MainMenuPrefab.SetActive(false);
+        RecordsMenuPrefab.ShowMenu();
+        MainMenuPrefab.HideMenu();
+    }
+
+    public void OnQuitButtonClick()
+    {
+        Application.Quit();
+    }
+
+    public void HideMenu()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void ShowMenu()
+    {
+        gameObject.SetActive(true);
     }
 }
