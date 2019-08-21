@@ -3,17 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using RTS;
 
-public class PlayerBase : MonoBehaviour
+public class PlayerBase : UserBase
 {
-    public Map map;
-
-    public Base Base = new Base();
-
     public GameObject PlayerInterfacePrefab;
     private Interface playerInterface;
-
-    public GameObject TroopPrefab;
-    private TroopController Troop;
 
     public void Raid(int attackUnitsCount, int defenceUnitsCount, int speedUnitsCount, int raidedBaseIndex)
     {

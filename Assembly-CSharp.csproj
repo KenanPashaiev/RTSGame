@@ -67,6 +67,7 @@
     <Compile Include="Assets\Base\AIType.cs" />
     <Compile Include="Assets\Base\Base.cs" />
     <Compile Include="Assets\Base\PlayerBase.cs" />
+    <Compile Include="Assets\Base\UserBase.cs" />
     <Compile Include="Assets\Camera\CameraController.cs" />
     <Compile Include="Assets\Generic Classes\Facilities\Barracks.cs" />
     <Compile Include="Assets\Generic Classes\Facilities\Facility.cs" />

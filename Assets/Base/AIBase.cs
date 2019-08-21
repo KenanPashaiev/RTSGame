@@ -4,17 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using RTS;
 
-public class AIBase : MonoBehaviour
+public class AIBase : UserBase
 {
     public AIType AIType;
     public float GameStepLength;
-
-    public Map map;
-
-    public Base Base = new Base();
-
-    public GameObject TroopPrefab;
-    private TroopController Troop;
 
     private void Start()
     {
@@ -135,13 +128,25 @@ public class AIBase : MonoBehaviour
 
         while(randomTrainedUnitCount > 0)
         {
-            bool done = Base.TrainUnit(randomUnitType);
+            bool done = Base.TrainUnit(GetRandomUnitType());
             if(!done)
             {
                 return;
             }
             randomTrainedUnitCount--;
         }
+    }
+
+    private UnitType GetRandomUnitType()
+    {
+        Array unitTypes = Enum.GetValues(typeof(UnitType));
+        int unitTypesCount = unitTypes.Length;
+
+        System.Random random = new System.Random();
+        int randomUnitTypeIndex = random.Next(unitTypesCount);
+        UnitType randomUnitType = (UnitType)unitTypes.GetValue(randomUnitTypeIndex);
+
+        return randomUnitType;
     }
 
     private void ExchangeResources()
